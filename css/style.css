@@ -3,6 +3,8 @@
 }
 
 body {
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Raleway', sans-serif;
     padding: 0;
     letter-spacing: 0.0625em;
 }
@@ -40,6 +42,10 @@ body {
 #mainNav .navbar-nav .nav-item:active, #mainNav .navbar-nav .nav-item:focus {
     outline: none;
     background-color: transparent;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(0,0,0,.5);
 }
 
 @media (min-width: 992px) {
@@ -118,6 +124,10 @@ body {
     -webkit-background-clip: text;
 }
 
+.master h1 {
+    font-size: 3.5rem;
+}
+
 .master hr {
     max-width: 35.25rem;
     border-width: .2rem;
@@ -131,9 +141,13 @@ header .header-text small {
 }
 
 @media (min-width: 768px) {
-  .master h1 {
+  .master .header-text {
     font-size: 4rem;
     line-height: 4rem;
+  }
+
+  #header-wrapper {
+    top: 0;
   }
 }
 
@@ -144,7 +158,7 @@ header .header-text small {
     min-height: 40rem;
     padding-top: 72px;
   }
-  .master h1 {
+  .master .header-text {
     font-size: 3.5rem;
     line-height: 3.5rem;
   }
@@ -157,7 +171,7 @@ header .header-text small {
 #header-wrapper {
     position: absolute;
     width: 100%;
-    top: 20em;
+    top: 15em;
 }
 
 .master .social {
@@ -241,7 +255,7 @@ section {
 .title-section {
     font-weight: bold;
     font-size: 40px;
-    margin-bottom: 35px;
+    margin-bottom: 55px;
     text-transform: uppercase;
 }
 
@@ -361,6 +375,19 @@ section {
 		opacity: 1;
 		transform: translateX(0);
 	}
+}
+
+.skills h4 {
+    padding-top: 30px;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.skills i {
+    color: #353638;
+    text-shadow: 1px 1px 1px #ccc;
+    margin: 50px;
+    font-size: 50px;
 }
 
 /*PROJECT SECTION STYLING*/
