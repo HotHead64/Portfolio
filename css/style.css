@@ -32,7 +32,7 @@ body {
 }
 
 #mainNav .navbar-nav .nav-item:hover {
-    color: fade(white, 100%);
+    color: white;
     outline: none;
     background-color: transparent;
 }
@@ -109,7 +109,7 @@ body {
     overflow: hidden;
   }
 
-.master h1 {
+.master .header-text {
     letter-spacing: 0.2rem;
     line-height: 3.5rem;
     color: white;
