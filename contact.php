@@ -3,105 +3,52 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-/*
-THIS FILE USES PHPMAILER INSTEAD OF THE PHP MAIL() FUNCTION
-*/
-
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src/SMTP.php';
 require 'vendor/autoload.php';
 
-/*
-*  CONFIGURE EVERYTHING HERE
-*/
-// an email address that will be in the From field of the email.
-$fromEmail = 'demo@domain.com';
-$fromName = 'Demo contact form';
+//if(isset($_POST['submit'])) {
+  $name = $_POST['name'];
+  $firstname = $_POST['firstname'];
+  $email = $_POST['mail'];
+  $subject = $_POST['subject'];
+  $message = $_POST['msg'];
 
-// an email address that will receive the email with the output of the form
-$sendToEmail = 'demo@domain.com';
-$sendToName = 'Demo contact form';
+  $mail = new PHPMailer(true);
 
-// subject of the email
-$subject = 'New message from contact form';
+  $mail->SMTPDebug = 2;
+  $mail->isSMTP();
+  $mail->Host = 'smtp.gmail.com';
+  $mail->SMTPAuth = true;
+  $mail->Username = 'mbeites@gmail.com';
+  $mail->Password = 'xxuwsujdxnszycxp';
+  $mail->SMTPSecure = 'tls';
+  $mail->Port = 587;
 
-// form field names and their translations.
-// array variable name => Text to appear in the email
-$fields = array('name' => 'Name', 'firstname' => 'Firstname', 'email' => 'Email', 'subjet' => 'Subject', 'message' => 'Message');
+  //Recipients
+  $mail->setFrom($email, $name);
+  $mail->addAddress('mbeites@gmail.com', 'Mickael Beites');
+  $mail->addReplyTo('info@example.com', 'Information');
+  $mail->addCC('cc@example.com');
+  $mail->addBCC('cc@example.com');
 
-// message that will be displayed when everything is OK :)
-$okMessage = 'Contact form successfully submitted. Thank you, I will get back to you soon!';
+  /*$mail->addAttachment('/var/tmp/file.tar.gz');
+  $mail->addAttachment('/tmp/image.jpg', 'new.jpg');
+  */
 
-// If something goes wrong, we will display this message.
-$errorMessage = 'There was an error while submitting the form. Please try again later';
+  $mail->isHTML(true);
+  $mail->Subject = $subject;
+  $mail->Body = $message;
 
-$emailTextHtml = "<h1>You have a new message from your contact form</h1><hr>";
-$emailTextHtml .= "<table>";
-
-foreach ($_POST as $key => $value) {
-    // If the field exists in the $fields array, include it in the email
-    if (isset($fields[$key])) {
-        $emailTextHtml .= "<tr><th>$fields[$key]</th><td>$value</td></tr>";
-    }
-}
-
-$emailTextHtml .= "</table><hr>";
-$emailTextHtml .= "<p>Have a nice day,<br>Mickael,<br>Beites</p>";
-
-$mail = new PHPMailer;
-
-$mail->setFrom($fromEmail, $fromName);
-$mail->addAddress($sendToEmail, $sendToName); // you can add more addresses by simply adding another line with $mail->addAddress();
-$mail->addReplyTo($from);
-
-$mail->isHTML(true);
-
-$mail->Subject = $subject;
-$mail->msgHTML($emailTextHtml); // this will also create a plain-text version of the HTML email, very handy
-
-if (!$mail->send()) {
-    throw new \Exception('I could not send the email.' . $mail->ErrorInfo);
-}
-
-$smtpHost = 'smtp.domain.com';
-$smtpUsername = 'hello@domain.com';
-$smtpPassword = 'PASSWORD';
-
-$mail = new PHPMailer;
-
-... - set from, recipient, message...
-
-$mail->isSMTP();
-
-//Enable SMTP debugging
-// 0 = off (for production use)
-// 1 = client messages
-// 2 = client and server messages
-$mail->SMTPDebug = 0;
-$mail->Debugoutput = 'html';
-
-//Set the hostname of the mail server
-// use
-// $mail->Host = gethostbyname('smtp.gmail.com');
-// if your network does not support SMTP over IPv6
-$mail->Host = gethostbyname($smtpHost);
-
-//Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
-$mail->Port = 587;
-
-//Set the encryption system to use - ssl (deprecated) or tls
-$mail->SMTPSecure = 'tls';
-
-//Whether to use SMTP authentication
-$mail->SMTPAuth = true;
-
-//Username to use for SMTP authentication - use full email address for gmail
-//We have configured this variable in the config section
-$mail->Username = $smtpHost;
-
-//Password to use for SMTP authentication
-//We have configured this variable in the config section
-$mail->Password = $smtpPassword;
-
-
-if(!$mail->send()) {
-    throw new \Exception('I could not send the email.' . $mail->ErrorInfo);
+  if (!$mail->send()) {
+      echo "Mailer Error: " . $mail->ErrorInfo;
+  } else {
+      echo "Message sent!";
+      header('Location: index.html');
+      //Section 2: IMAP
+      //Uncomment these to save your message in the 'Sent Mail' folder.
+      #if (save_mail($mail)) {
+      #    echo "Message saved!";
+      #}
 }
