@@ -437,6 +437,7 @@ section {
 
 #section-projects .container-fluid .portfolio-box .portfolio-box-caption .project-name {
   font-size: 1.2rem;
+  color: black;
 }
 
 #section-projects .container-fluid .portfolio-box:hover .portfolio-box-caption {
